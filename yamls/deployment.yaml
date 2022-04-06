@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: krystal-ns-deployment
+  labels:
+    app: krystal-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: krystal-ns
+  template:
+    metadata:
+      labels:
+        app: krystal-ns
+    spec:
+      containers:
+        - name: krystal-ns
+          image: krystal-ns:latest
+          ports:
+          - containerPort: 8080
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: krystal-ns-service
+spec:
+  selector:
+    app: krystal-ns
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: krystal-ns-ingress
+spec:
+  rules:
+  - host: api.krystal-ns.com
+    http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: krystal-ns-service
+              port:
+                number: 80
+

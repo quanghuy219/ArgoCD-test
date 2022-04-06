@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1
+kind: Application
+metadata:
+  name: go-app-argo-config
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/quanghuy219/ArgoCD-test.git
+    targetRevision: main
+    path: yamls
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
