@@ -5,7 +5,7 @@ metadata:
   labels:
     app: krystal-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: krystal-ns
