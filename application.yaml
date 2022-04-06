@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: go-app-argo-config
@@ -11,6 +11,7 @@ spec:
     path: yamls
   destination:
     server: https://kubernetes.default.svc
+    namespace: demo-app
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
